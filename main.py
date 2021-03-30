@@ -12,7 +12,7 @@ sessionStorage = {}
 
 @app.route('/post', methods=['POST'])
 def main():
-    logging.info(f'Request: {request.json!r}')
+    logging.info('Request: %r', request.json)
 
     response = {
         'session': request.json['session'],
@@ -24,7 +24,7 @@ def main():
 
     handle_dialog(request.json, response)
 
-    logging.info(f'Response:  {response!r}')
+    logging.info('Response: %r', request.json)
 
     return json.dumps(response)
 
@@ -55,8 +55,9 @@ def handle_dialog(req, res):
         res['response']['end_session'] = True
         return
 
-    res['response']['text'] = \
-        f"Все говорят '{req['request']['original_utterance']}', а ты купи слона!"
+    res['response']['text'] = 'Все говорят "%s", а ты купи слона!' % (
+        req['request']['original_utterance']
+    )
     res['response']['buttons'] = get_suggests(user_id)
 
 
