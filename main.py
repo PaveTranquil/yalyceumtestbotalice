@@ -1,7 +1,7 @@
 from flask import Flask, request
 import logging
-import json
-import os
+import json, os
+
 
 app = Flask(__name__)
 
@@ -27,6 +27,10 @@ def main():
     logging.info('Response: %r', request.json)
 
     return json.dumps(response)
+
+@app.route('/')
+def appp():
+    return 'Work'
 
 
 def handle_dialog(req, res):
@@ -83,5 +87,5 @@ def get_suggests(user_id):
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT",  5000))
+    port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
